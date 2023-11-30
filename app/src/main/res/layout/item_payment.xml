@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/padding_8">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/payment_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_l"
+        android:ellipsize="end"
+        android:maxLines="2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/payment_amount"
+        tools:text="Payment long title"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/payment_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_m"
+        app:layout_constraintTop_toBottomOf="@id/payment_title"
+        app:layout_constraintStart_toStartOf="parent"
+        android:alpha="0.7"
+        tools:text="14.06.2023"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/payment_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_m"
+        android:textStyle="bold"
+        android:layout_marginStart="@dimen/margin_8"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/payment_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="112000000.45"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        android:alpha="0.3"
+        android:layout_marginTop="@dimen/margin_8"
+        app:layout_constraintTop_toBottomOf="@id/payment_date"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
