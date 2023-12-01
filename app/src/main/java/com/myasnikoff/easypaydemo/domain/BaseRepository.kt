@@ -14,31 +14,38 @@ abstract class BaseRepository {
         handleResult: (T) -> Unit = {}
     ): ApiResult<T> {
         return try {
-            withContext(Dispatchers.IO) {
-                val result = executeResponse()
-                if (result.success) {
-                    if (result.response == null) {
-                        ApiResult.Failure.DataError(DEFAULT_EMPTY_DATA_MESSAGE)
-                    } else {
-                        handleResult(result.response)
-                        ApiResult.Success(data = result.response)
-                    }
+            val result = withContext(Dispatchers.IO) { executeResponse() }
+            if (result.success) {
+                if (result.response == null) {
+                    ApiResult.Failure.DataError(DEFAULT_EMPTY_DATA_MESSAGE)
                 } else {
-                    when (result.error?.code) {
-                        TOKEN_ERROR_CODE, CREDENTIALS_ERROR_CODE, APP_KEY_ERROR_CODE -> {
-                            ApiResult.Failure.AuthError(
-                                code = result.error.code,
-                                message = result.error.message
-                            )
-                        }
-                        VERSION_ERROR_CODE -> {
-                            ApiResult.Failure.ApiError(
-                                code = result.error.code,
-                                message = result.error.message
-                            )
-                        }
-                        else -> ApiResult.Failure.UnknownError(e = IllegalStateException())
+                    handleResult(result.response)
+                    ApiResult.Success(data = result.response)
+                }
+            } else {
+                when (result.error?.code) {
+                    CREDENTIALS_ERROR_CODE -> {
+                        ApiResult.Failure.LoginError(
+                            code = result.error.code,
+                            message = result.error.message
+                        )
                     }
+
+                    TOKEN_ERROR_CODE, APP_KEY_ERROR_CODE -> {
+                        ApiResult.Failure.AuthError(
+                            code = result.error.code,
+                            message = result.error.message
+                        )
+                    }
+
+                    VERSION_ERROR_CODE -> {
+                        ApiResult.Failure.ApiError(
+                            code = result.error.code,
+                            message = result.error.message
+                        )
+                    }
+
+                    else -> ApiResult.Failure.UnknownError(e = IllegalStateException())
                 }
             }
         } catch (error: HttpException) {

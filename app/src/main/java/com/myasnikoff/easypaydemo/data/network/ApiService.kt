@@ -3,6 +3,7 @@ package com.myasnikoff.easypaydemo.data.network
 import com.myasnikoff.easypaydemo.data.model.ApiResponse
 import com.myasnikoff.easypaydemo.data.model.AuthData
 import com.myasnikoff.easypaydemo.data.model.Payment
+import com.myasnikoff.easypaydemo.data.model.TokenData
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
@@ -12,18 +13,18 @@ import retrofit2.http.POST
 
 interface ApiService {
 
-    @POST("/login")
+    @POST("/api-test/login")
     suspend fun login(
         @Body authData: AuthData
-    ): ApiResponse<String>
+    ): ApiResponse<TokenData>
 
-    @GET("/payments")
+    @GET("/api-test/payments")
     suspend fun getPayments(
         @Header("token") token: String
     ): ApiResponse<List<Payment>>
 
     companion object {
-        private const val BASE_URL = "https://easypay.world/api-test/"
+        private const val BASE_URL = "https://easypay.world"
         private const val APP_KEY_VALUE = "12345"
         private const val API_VERSION_VALUE = "1"
 
