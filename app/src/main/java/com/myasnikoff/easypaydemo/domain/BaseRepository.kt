@@ -1,5 +1,6 @@
 package com.myasnikoff.easypaydemo.domain
 
+import com.google.gson.JsonParseException
 import com.myasnikoff.easypaydemo.data.model.ApiResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -51,6 +52,8 @@ abstract class BaseRepository {
         } catch (error: HttpException) {
             ApiResult.Failure.UnknownError(e = error)
         } catch (error: IOException) {
+            ApiResult.Failure.UnknownError(e = error)
+        } catch (error: JsonParseException) {
             ApiResult.Failure.UnknownError(e = error)
         }
     }

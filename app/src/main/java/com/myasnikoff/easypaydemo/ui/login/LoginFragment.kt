@@ -1,8 +1,8 @@
 package com.myasnikoff.easypaydemo.ui.login
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -11,6 +11,8 @@ import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.myasnikoff.easypaydemo.R
 import com.myasnikoff.easypaydemo.databinding.FragmentLoginBinding
+import com.myasnikoff.easypaydemo.ui.NavigationProvider
+import com.myasnikoff.easypaydemo.ui.payments.PaymentsFragment
 import com.myasnikoff.easypaydemo.utils.clearErrorMessage
 import com.myasnikoff.easypaydemo.utils.hideSoftKeyboard
 import com.myasnikoff.easypaydemo.utils.setErrorMessage
@@ -23,6 +25,12 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private val viewModel: LoginViewModel by viewModels()
 
+    private var navigationProvider: NavigationProvider? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        navigationProvider = context as? NavigationProvider
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
@@ -52,17 +60,16 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private fun handleState(state: AuthState) {
         when (state) {
             AuthState.Initial -> renderInitial()
-            AuthState.AuthFailure -> renderAuthFailure()
-            is AuthState.FieldFailure -> renderFieldFailure(state)
             AuthState.Loading -> renderLoading()
-            AuthState.Success -> {
-                /*todo: navigate to payments*/
-                renderInitial()
-                Toast.makeText(context, "авторизация успешно завершена!", Toast.LENGTH_SHORT).show()
-            }
-
+            AuthState.Success -> navigateToScreen(PaymentsFragment())
+            AuthState.AuthFailure -> renderAuthFailure()
             AuthState.UnknownFailure -> renderUnknownFailure()
+            is AuthState.FieldFailure -> renderFieldFailure(state)
         }
+    }
+
+    private fun navigateToScreen(fragment: PaymentsFragment) {
+        navigationProvider?.navigateTo(fragment)
     }
 
     private fun renderInitial() = with(binding) {
