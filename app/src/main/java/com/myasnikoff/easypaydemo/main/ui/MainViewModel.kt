@@ -1,36 +1,28 @@
 package com.myasnikoff.easypaydemo.main.ui
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.myasnikoff.easypaydemo.core.domain.TokenStore
-import kotlinx.coroutines.Job
+import com.myasnikoff.easypaydemo.core.ui.BaseViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val tokenStore: TokenStore
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val mLoginStateFlow = MutableStateFlow(false)
     val loginStateFlow = mLoginStateFlow.asStateFlow()
-
-    private var job: Job? = null
 
     init {
         checkToken()
     }
 
-    fun checkToken() {
+    private fun checkToken() {
         job?.cancel()
         job = viewModelScope.launch {
             val token = tokenStore.token
             mLoginStateFlow.value = token.isNotEmpty()
         }
-    }
-
-    override fun onCleared() {
-        job?.cancel()
-        super.onCleared()
     }
 }
