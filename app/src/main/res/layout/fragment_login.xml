@@ -79,8 +79,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_36"
-            android:enabled="false"
-            android:text="@string/to_enter" />
+            android:backgroundTint="?attr/colorPrimary"
+            android:padding="@dimen/margin_16"
+            android:text="@string/to_enter"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_l" />
 
     </LinearLayout>
 

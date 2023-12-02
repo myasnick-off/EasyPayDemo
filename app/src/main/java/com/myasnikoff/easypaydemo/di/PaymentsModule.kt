@@ -8,5 +8,5 @@ import org.koin.dsl.module
 
 val paymentsModule = module {
     single<PaymentsRepository> { PaymentsRepositoryImpl(get(), get()) }
-    viewModel { PaymentsViewModel(get()) }
+    viewModel { PaymentsViewModel(get(), get()) }
 }

@@ -19,6 +19,10 @@ class LoginRepositoryImpl(
         )
     }
 
+    override suspend fun logout() {
+        tokenStore.clear()
+    }
+
     private fun saveToken(token: String) {
         tokenStore.token = token
     }
