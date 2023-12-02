@@ -8,7 +8,7 @@ import com.myasnikoff.easypaydemo.domain.BaseRepository
 import com.myasnikoff.easypaydemo.domain.TokenHolder
 
 class LoginRepositoryImpl(
-    private val apiService: ApiService = ApiService.getInstance()
+    private val apiService: ApiService
 ) : BaseRepository(), LoginRepository {
 
     override suspend fun login(name: String, pass: String): ApiResult<TokenData> {

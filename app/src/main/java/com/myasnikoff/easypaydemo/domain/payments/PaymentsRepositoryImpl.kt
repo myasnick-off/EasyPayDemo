@@ -7,7 +7,7 @@ import com.myasnikoff.easypaydemo.domain.BaseRepository
 import com.myasnikoff.easypaydemo.domain.TokenHolder
 
 class PaymentsRepositoryImpl(
-    private val apiService: ApiService = ApiService.getInstance()
+    private val apiService: ApiService
 ) : BaseRepository(), PaymentsRepository {
 
     override suspend fun getPayments(): ApiResult<List<Payment>> {

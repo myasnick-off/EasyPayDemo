@@ -6,14 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.myasnikoff.easypaydemo.domain.ApiResult
 import com.myasnikoff.easypaydemo.domain.login.LoginRepository
-import com.myasnikoff.easypaydemo.domain.login.LoginRepositoryImpl
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val repository: LoginRepository = LoginRepositoryImpl()
+    private val repository: LoginRepository
 ) : ViewModel() {
 
     private val mAuthStateFlow = MutableStateFlow<AuthState>(AuthState.Initial)

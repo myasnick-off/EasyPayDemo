@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.myasnikoff.easypaydemo.R
@@ -15,12 +14,13 @@ import com.myasnikoff.easypaydemo.ui.login.LoginFragment
 import com.myasnikoff.easypaydemo.ui.payments.adapter.PaymentsAdapter
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PaymentsFragment: Fragment(R.layout.fragment_payments) {
 
     private val binding: FragmentPaymentsBinding by viewBinding(FragmentPaymentsBinding::bind)
 
-    private val viewModel: PaymentsViewModel by viewModels()
+    private val viewModel: PaymentsViewModel by viewModel()
 
     private var navigationProvider: NavigationProvider? = null
     private val paymentsAdapter = PaymentsAdapter()
