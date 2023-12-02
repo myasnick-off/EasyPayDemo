@@ -5,4 +5,6 @@ import com.myasnikoff.easypaydemo.domain.ApiResult
 
 interface LoginRepository {
     suspend fun login(name: String, pass: String): ApiResult<TokenData>
+
+    suspend fun logout()
 }

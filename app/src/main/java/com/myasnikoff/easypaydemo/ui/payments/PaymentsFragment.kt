@@ -5,22 +5,22 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.myasnikoff.easypaydemo.R
 import com.myasnikoff.easypaydemo.databinding.FragmentPaymentsBinding
-import com.myasnikoff.easypaydemo.ui.NavigationProvider
+import com.myasnikoff.easypaydemo.ui.main.NavigationProvider
 import com.myasnikoff.easypaydemo.ui.login.LoginFragment
 import com.myasnikoff.easypaydemo.ui.payments.adapter.PaymentsAdapter
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PaymentsFragment: Fragment(R.layout.fragment_payments) {
+class PaymentsFragment : Fragment(R.layout.fragment_payments) {
 
     private val binding: FragmentPaymentsBinding by viewBinding(FragmentPaymentsBinding::bind)
 
-    private val viewModel: PaymentsViewModel by viewModels()
+    private val viewModel: PaymentsViewModel by viewModel()
 
     private var navigationProvider: NavigationProvider? = null
     private val paymentsAdapter = PaymentsAdapter()
@@ -32,6 +32,7 @@ class PaymentsFragment: Fragment(R.layout.fragment_payments) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initMenu()
         initView()
         initViewModel()
     }
@@ -39,6 +40,18 @@ class PaymentsFragment: Fragment(R.layout.fragment_payments) {
     override fun onDetach() {
         navigationProvider = null
         super.onDetach()
+    }
+
+    private fun initMenu() {
+        binding.paymentsToolbar.apply {
+            setTitle(R.string.payments)
+            setOnMenuItemClickListener { menuItem ->
+                if (menuItem.itemId == R.id.menu_logout) {
+                    viewModel.logout()
+                }
+                true
+            }
+        }
     }
 
     private fun initView() = with(binding) {
@@ -51,12 +64,12 @@ class PaymentsFragment: Fragment(R.layout.fragment_payments) {
     }
 
     private fun handleState(state: PaymentsState) {
-        when(state) {
+        when (state) {
             PaymentsState.Loading -> renderLoading()
             PaymentsState.EmptyData -> renderEmptyData()
             is PaymentsState.ValidData -> renderValidData(state.data)
             PaymentsState.UnknownFailure -> renderUnknownFailure()
-            PaymentsState.AuthFailure -> navigateToAuthScreen()
+            PaymentsState.Logout -> navigateToAuthScreen()
         }
     }
 

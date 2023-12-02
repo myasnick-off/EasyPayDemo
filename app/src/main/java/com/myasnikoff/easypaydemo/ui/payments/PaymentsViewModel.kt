@@ -4,15 +4,16 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.myasnikoff.easypaydemo.domain.ApiResult
+import com.myasnikoff.easypaydemo.domain.login.LoginRepository
 import com.myasnikoff.easypaydemo.domain.payments.PaymentsRepository
-import com.myasnikoff.easypaydemo.domain.payments.PaymentsRepositoryImpl
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class PaymentsViewModel(
-    private val repository: PaymentsRepository = PaymentsRepositoryImpl()
+    private val paymentsRepository: PaymentsRepository,
+    private val loginRepository: LoginRepository
 ) : ViewModel() {
 
     private val mPaymentsStateFlow = MutableStateFlow<PaymentsState>(PaymentsState.Loading)
@@ -27,11 +28,11 @@ class PaymentsViewModel(
     fun getPayments() {
         job = viewModelScope.launch {
             mPaymentsStateFlow.value = PaymentsState.Loading
-            val result = repository.getPayments()
+            val result = paymentsRepository.getPayments()
             mPaymentsStateFlow.value = when (result) {
                 is ApiResult.Failure.AuthError -> {
                     log(result.message)
-                    PaymentsState.AuthFailure
+                    PaymentsState.Logout
                 }
                 is ApiResult.Failure -> {
                     log(result.message)
@@ -45,6 +46,14 @@ class PaymentsViewModel(
                     }
                 }
             }
+        }
+    }
+
+    fun logout() {
+        job = viewModelScope.launch {
+            mPaymentsStateFlow.value = PaymentsState.Loading
+            loginRepository.logout()
+            mPaymentsStateFlow.value = PaymentsState.Logout
         }
     }
 
