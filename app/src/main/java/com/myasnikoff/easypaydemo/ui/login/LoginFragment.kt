@@ -31,10 +31,16 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         super.onAttach(context)
         navigationProvider = context as? NavigationProvider
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
         initViewModel()
+    }
+
+    override fun onDetach() {
+        navigationProvider = null
+        super.onDetach()
     }
 
     private fun initView() = with(binding) {
@@ -61,15 +67,15 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         when (state) {
             AuthState.Initial -> renderInitial()
             AuthState.Loading -> renderLoading()
-            AuthState.Success -> navigateToScreen(PaymentsFragment())
+            AuthState.Success -> navigateToPaymentsScreen()
             AuthState.AuthFailure -> renderAuthFailure()
             AuthState.UnknownFailure -> renderUnknownFailure()
             is AuthState.FieldFailure -> renderFieldFailure(state)
         }
     }
 
-    private fun navigateToScreen(fragment: PaymentsFragment) {
-        navigationProvider?.navigateTo(fragment)
+    private fun navigateToPaymentsScreen() {
+        navigationProvider?.navigateTo(PaymentsFragment())
     }
 
     private fun renderInitial() = with(binding) {
