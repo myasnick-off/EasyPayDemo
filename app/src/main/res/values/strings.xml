@@ -2,10 +2,14 @@
     <string name="app_name">Easy Pay Demo</string>
     <string name="enter">Вход</string>
     <string name="login">Логин</string>
-    <string name="login_helper">Логин для теста: demo</string>
+    <string name="login_helper">Введите для теста: demo</string>
     <string name="password">Пароль</string>
-    <string name="password_helper">Пароль для теста: 12345</string>
+    <string name="password_helper">Введите для теста: 12345</string>
     <string name="to_enter">Войти</string>
     <string name="empty_result">Ничего не найдено</string>
     <string name="try_again">Еще раз…</string>
+    <string name="auth_error_message">Неверный логин или пароль!</string>
+    <string name="name_is_required">Необходимо ввети логин!</string>
+    <string name="pass_is_required">Необходимо ввести пароль!</string>
+    <string name="unknown_error_message">Неизвестная ошибка! Попробуйте еще раз…</string>
 </resources>

@@ -71,7 +71,7 @@
             android:textColor="@color/design_default_color_error"
             android:textSize="@dimen/text_l"
             android:visibility="gone"
-            tools:text="Wrong login or password!"
+            tools:text="@string/auth_error_message"
             tools:visibility="visible" />
 
         <androidx.appcompat.widget.AppCompatButton

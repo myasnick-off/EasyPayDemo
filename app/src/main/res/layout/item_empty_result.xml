@@ -22,11 +22,10 @@
         android:text="@string/empty_result" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/login_button"
+        android:id="@+id/retry_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_36"
-        android:enabled="false"
         android:text="@string/try_again" />
 
 </LinearLayout>
