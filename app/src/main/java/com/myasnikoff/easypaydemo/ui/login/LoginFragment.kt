@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.myasnikoff.easypaydemo.R
 import com.myasnikoff.easypaydemo.databinding.FragmentLoginBinding
-import com.myasnikoff.easypaydemo.ui.NavigationProvider
+import com.myasnikoff.easypaydemo.ui.main.NavigationProvider
 import com.myasnikoff.easypaydemo.ui.payments.PaymentsFragment
 import com.myasnikoff.easypaydemo.utils.clearErrorMessage
 import com.myasnikoff.easypaydemo.utils.hideSoftKeyboard

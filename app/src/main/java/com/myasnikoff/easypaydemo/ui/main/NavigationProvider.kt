@@ -1,4 +1,4 @@
-package com.myasnikoff.easypaydemo.ui
+package com.myasnikoff.easypaydemo.ui.main
 
 import androidx.fragment.app.Fragment
 

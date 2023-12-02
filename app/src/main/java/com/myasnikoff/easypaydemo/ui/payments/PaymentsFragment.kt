@@ -9,7 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.myasnikoff.easypaydemo.R
 import com.myasnikoff.easypaydemo.databinding.FragmentPaymentsBinding
-import com.myasnikoff.easypaydemo.ui.NavigationProvider
+import com.myasnikoff.easypaydemo.ui.main.NavigationProvider
 import com.myasnikoff.easypaydemo.ui.login.LoginFragment
 import com.myasnikoff.easypaydemo.ui.payments.adapter.PaymentsAdapter
 import kotlinx.coroutines.flow.launchIn
