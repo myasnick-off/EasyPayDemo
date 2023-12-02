@@ -1,50 +1,28 @@
 package com.myasnikoff.easypaydemo.login.ui
 
-import android.content.Context
-import android.os.Bundle
-import android.view.View
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.myasnikoff.easypaydemo.R
-import com.myasnikoff.easypaydemo.databinding.FragmentLoginBinding
-import com.myasnikoff.easypaydemo.core.ui.NavigationProvider
-import com.myasnikoff.easypaydemo.payments.ui.PaymentsFragment
+import com.myasnikoff.easypaydemo.core.ui.BaseFragment
 import com.myasnikoff.easypaydemo.core.utils.clearErrorMessage
 import com.myasnikoff.easypaydemo.core.utils.hideSoftKeyboard
 import com.myasnikoff.easypaydemo.core.utils.setErrorMessage
+import com.myasnikoff.easypaydemo.databinding.FragmentLoginBinding
 import com.myasnikoff.easypaydemo.login.ui.model.AuthState
+import com.myasnikoff.easypaydemo.payments.ui.PaymentsFragment
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class LoginFragment : Fragment(R.layout.fragment_login) {
+class LoginFragment : BaseFragment(R.layout.fragment_login) {
 
-    private val binding: FragmentLoginBinding by viewBinding(FragmentLoginBinding::bind)
+    override val binding: FragmentLoginBinding by viewBinding(FragmentLoginBinding::bind)
 
-    private val viewModel: LoginViewModel by viewModel()
+    override val viewModel: LoginViewModel by viewModel()
 
-    private var navigationProvider: NavigationProvider? = null
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        navigationProvider = context as? NavigationProvider
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initView()
-        initViewModel()
-    }
-
-    override fun onDetach() {
-        navigationProvider = null
-        super.onDetach()
-    }
-
-    private fun initView() = with(binding) {
+    override fun initView() = with(binding) {
         loginEditText.doAfterTextChanged {
             loginInputLayout.clearErrorMessage()
         }
@@ -60,7 +38,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         root.setOnClickListener { it.hideSoftKeyboard() }
     }
 
-    private fun initViewModel() {
+    override fun initViewModel() {
         viewModel.authStateFlow.onEach(::handleState).launchIn(lifecycleScope)
     }
 
