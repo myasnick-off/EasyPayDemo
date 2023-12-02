@@ -5,10 +5,11 @@ import com.myasnikoff.easypaydemo.data.model.TokenData
 import com.myasnikoff.easypaydemo.data.network.ApiService
 import com.myasnikoff.easypaydemo.domain.ApiResult
 import com.myasnikoff.easypaydemo.domain.BaseRepository
-import com.myasnikoff.easypaydemo.domain.TokenHolder
+import com.myasnikoff.easypaydemo.domain.TokenStore
 
 class LoginRepositoryImpl(
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val tokenStore: TokenStore
 ) : BaseRepository(), LoginRepository {
 
     override suspend fun login(name: String, pass: String): ApiResult<TokenData> {
@@ -19,6 +20,6 @@ class LoginRepositoryImpl(
     }
 
     private fun saveToken(token: String) {
-        TokenHolder.token = token
+        tokenStore.token = token
     }
 }

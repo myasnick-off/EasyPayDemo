@@ -7,6 +7,6 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val paymentsModule = module {
-    single<PaymentsRepository> { PaymentsRepositoryImpl(get()) }
+    single<PaymentsRepository> { PaymentsRepositoryImpl(get(), get()) }
     viewModel { PaymentsViewModel(get()) }
 }
